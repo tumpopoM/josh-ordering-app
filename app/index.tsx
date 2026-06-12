@@ -191,24 +191,6 @@ export default function ProductListScreen() {
         initialNumToRender={8}
         removeClippedSubviews
       />
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Show catalog error state"
-        onPress={() => setStatus("error")}
-        style={{
-          position: "absolute",
-          right: spacing.lg,
-          bottom: spacing.lg,
-          borderRadius: 999,
-          paddingHorizontal: spacing.md,
-          paddingVertical: spacing.sm,
-          backgroundColor: colors.surfaceMuted,
-        }}
-      >
-        <Text selectable style={{ color: colors.textMuted, fontSize: typography.small }}>
-          Test error
-        </Text>
-      </Pressable>
     </View>
   );
 }
