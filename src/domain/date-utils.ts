@@ -14,3 +14,12 @@ export function addDays(date: string, days: number): string {
 export function isBefore(date: string, minimumDate: string): boolean {
   return date < minimumDate;
 }
+
+export function formatShortDate(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00.000Z`));
+}
