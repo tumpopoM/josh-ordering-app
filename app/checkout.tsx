@@ -99,6 +99,7 @@ export default function CheckoutReviewScreen() {
 
       {validation.requiresSplitDelivery ? (
         <View
+          accessibilityLiveRegion="polite"
           style={{
             gap: spacing.xs,
             borderRadius: 16,

@@ -145,6 +145,10 @@ export default function ProductListScreen() {
             >
               <TextInput
                 accessibilityLabel="Search products"
+                accessibilityHint="Filter the ingredient catalog by name"
+                autoCapitalize="none"
+                autoCorrect={false}
+                returnKeyType="search"
                 value={searchText}
                 onChangeText={setSearchText}
                 placeholder="Search ingredients"
@@ -166,6 +170,7 @@ export default function ProductListScreen() {
                 <Pressable
                   accessibilityRole="button"
                   accessibilityLabel={`Open cart with ${cartCount} items`}
+                  accessibilityHint="Opens the current order summary and checkout options"
                   style={({ pressed }) => ({
                     minWidth: 58,
                     minHeight: 48,
@@ -203,6 +208,7 @@ export default function ProductListScreen() {
                   key={item}
                   accessibilityRole="button"
                   accessibilityLabel={`Filter ${item}`}
+                  accessibilityState={{ selected: category === item }}
                   onPress={() => setCategory(item)}
                   style={({ pressed }) => ({
                     minHeight: 42,

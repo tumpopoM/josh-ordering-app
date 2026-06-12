@@ -223,6 +223,7 @@ function DeliveryDateButton({
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={`Select ${label}`}
+      accessibilityHint="Choose this delivery date for your order"
       onPress={onPress}
       style={({ pressed }) => ({
         minHeight: 44,
