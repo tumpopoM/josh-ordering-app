@@ -22,6 +22,10 @@ export function QuantityStepper({
         flexDirection: "row",
         alignItems: "center",
         gap: spacing.sm,
+        padding: spacing.xs,
+        borderRadius: 14,
+        borderCurve: "continuous",
+        backgroundColor: colors.surfaceMuted,
       }}
     >
       <StepperButton
@@ -79,13 +83,19 @@ function StepperButton({
       disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => ({
-        width: 44,
-        height: 44,
+        width: 40,
+        height: 40,
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 12,
         borderCurve: "continuous",
-        backgroundColor: pressed ? colors.border : colors.surfaceMuted,
+        borderWidth: 1,
+        borderColor: disabled ? colors.border : colors.border,
+        backgroundColor: disabled
+          ? colors.surface
+          : pressed
+            ? colors.primarySoft
+            : colors.surface,
       })}
     >
       <Text

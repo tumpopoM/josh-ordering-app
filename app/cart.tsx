@@ -77,12 +77,13 @@ export default function CartScreen() {
             key={line.product.id}
             style={{
               gap: spacing.md,
-              borderRadius: 16,
+              borderRadius: 18,
               borderCurve: "continuous",
               borderWidth: 1,
               borderColor: colors.border,
               padding: spacing.lg,
               backgroundColor: colors.surface,
+              boxShadow: "0px 6px 14px rgba(11, 107, 87, 0.08)",
             }}
           >
             <View

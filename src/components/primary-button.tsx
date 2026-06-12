@@ -28,17 +28,19 @@ export function PrimaryButton({
       onPress={onPress}
       style={({ pressed }) => [
         {
-          minHeight: 52,
+          minHeight: 54,
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 14,
           borderCurve: "continuous",
           paddingHorizontal: spacing.lg,
+          paddingVertical: spacing.sm,
           backgroundColor: disabled
             ? colors.border
             : pressed
               ? colors.primaryPressed
               : colors.primary,
+          boxShadow: disabled ? "none" : "0px 8px 16px rgba(11, 107, 87, 0.14)",
         },
         style,
       ]}
