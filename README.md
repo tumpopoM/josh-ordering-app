@@ -45,7 +45,7 @@ npm run typecheck
 
 Current result:
 
-- `npm test` → 6 test files passed, 15 tests passed
+- `npm test` → 7 test files passed, 21 tests passed
 - `npm run typecheck` → passed with no TypeScript errors
 
 ## Product Flow
@@ -105,7 +105,7 @@ the product catalog can scale more gracefully than a manual map over a
 - Product and delivery data live in local mock files instead of UI components.
 - The app currently targets a Bangkok ordering flow in the UI.
 - Unit tests cover cart calculations, cart store behavior, product filtering,
-  delivery validation, and shared formatters.
+  delivery validation, date utilities, and shared formatters.
 - The current build already covers the main ordering flow, validation rules,
   and checkout confirmation path. Bonus items such as offline persistence,
   advanced accessibility polish, and animation/skeleton states are still
