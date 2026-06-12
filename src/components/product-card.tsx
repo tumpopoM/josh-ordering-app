@@ -25,8 +25,10 @@ export const ProductCard = memo(function ProductCard({
     <Link href={`/product/${product.id}`} asChild>
       <Pressable
         accessibilityRole="button"
+        accessible
         accessibilityLabel={`Open ${product.name} details`}
         accessibilityHint={`View price, delivery timing, and add ${product.name} to your cart`}
+        accessibilityState={{ disabled: isUnavailable }}
         style={({ pressed }) => ({
           gap: spacing.md,
           borderRadius: 16,

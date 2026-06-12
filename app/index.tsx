@@ -114,6 +114,7 @@ export default function ProductListScreen() {
       >
         <ActivityIndicator color={colors.primary} size="large" />
         <Text
+          accessibilityLiveRegion="polite"
           selectable
           style={{ color: colors.textMuted, fontSize: typography.body }}
         >
@@ -158,7 +159,8 @@ export default function ProductListScreen() {
             >
               <TextInput
                 accessibilityLabel="Search products"
-                accessibilityHint="Filter the ingredient catalog by name"
+                accessibilityHint="Type to filter the ingredient catalog by ingredient name"
+                accessibilityRole="search"
                 autoCapitalize="none"
                 autoCorrect={false}
                 returnKeyType="search"
@@ -182,8 +184,9 @@ export default function ProductListScreen() {
               <Link href="/cart" asChild>
                 <Pressable
                   accessibilityRole="button"
-                  accessibilityLabel={`Open cart with ${cartCount} items`}
-                  accessibilityHint="Opens the current order summary and checkout options"
+                  accessibilityLabel={`Open cart with ${cartCount} item${cartCount === 1 ? "" : "s"}`}
+                  accessibilityHint="Open the current order summary and checkout options"
+                  accessibilityState={{ disabled: cartCount === 0 }}
                   style={({ pressed }) => ({
                     minWidth: 58,
                     minHeight: 48,
@@ -220,7 +223,8 @@ export default function ProductListScreen() {
                 <Pressable
                   key={item}
                   accessibilityRole="button"
-                  accessibilityLabel={`Filter ${item}`}
+                  accessibilityLabel={`Filter products to ${item.toLowerCase()}`}
+                  accessibilityHint={`Show ${item.toLowerCase()} ingredients only`}
                   accessibilityState={{ selected: category === item }}
                   onPress={() => setCategory(item)}
                   style={({ pressed }) => ({

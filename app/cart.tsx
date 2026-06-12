@@ -169,7 +169,9 @@ export default function CartScreen() {
         </View>
       </View>
 
-      <ValidationMessages messages={validation.messages} />
+      <View accessibilityLiveRegion="polite">
+        <ValidationMessages messages={validation.messages} />
+      </View>
 
       <View
         style={{

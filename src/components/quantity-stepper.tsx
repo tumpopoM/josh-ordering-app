@@ -24,7 +24,13 @@ export function QuantityStepper({
         gap: spacing.sm,
       }}
     >
-      <StepperButton label="-" accessibilityLabel="Decrease quantity" onPress={onDecrease} />
+      <StepperButton
+        label="-"
+        accessibilityLabel="Decrease quantity"
+        accessibilityHint="Reduce the number of this ingredient in your cart"
+        disabled={quantity <= 1}
+        onPress={onDecrease}
+      />
       <Text
         selectable
         style={{
@@ -38,7 +44,13 @@ export function QuantityStepper({
       >
         {quantity}
       </Text>
-      <StepperButton label="+" accessibilityLabel="Increase quantity" onPress={onIncrease} />
+      <StepperButton
+        label="+"
+        accessibilityLabel="Increase quantity"
+        accessibilityHint="Add one more of this ingredient to your cart"
+        disabled={false}
+        onPress={onIncrease}
+      />
     </View>
   );
 }
@@ -46,14 +58,25 @@ export function QuantityStepper({
 type StepperButtonProps = {
   label: string;
   accessibilityLabel: string;
+  accessibilityHint: string;
+  disabled?: boolean;
   onPress: () => void;
 };
 
-function StepperButton({ label, accessibilityLabel, onPress }: StepperButtonProps) {
+function StepperButton({
+  label,
+  accessibilityLabel,
+  accessibilityHint,
+  disabled = false,
+  onPress,
+}: StepperButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       onPress={onPress}
       style={({ pressed }) => ({
         width: 44,
