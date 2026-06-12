@@ -36,12 +36,16 @@ npm run web
 
 ## Verification
 
-Run the validation commands before submitting:
+Verified in the current workspace:
 
 ```bash
 npm test
 npm run typecheck
 ```
+
+Current result:
+- `npm test` → 6 test files passed, 14 tests passed
+- `npm run typecheck` → passed with no TypeScript errors
 
 ## Product Flow
 
@@ -101,3 +105,7 @@ the product catalog can scale more gracefully than a manual map over a
 - The app currently targets a Bangkok ordering flow in the UI.
 - Unit tests cover cart calculations, cart store behavior, product filtering,
   delivery validation, and shared formatters.
+- The current build already covers the main ordering flow, validation rules,
+  and checkout confirmation path. Bonus items such as offline persistence,
+  advanced accessibility polish, and animation/skeleton states are still
+  optional follow-up work if needed for the final assessment submission.
