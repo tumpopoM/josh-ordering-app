@@ -96,4 +96,19 @@ describe("delivery validation", () => {
       }),
     );
   });
+
+  it("allows checkout when all rules are satisfied", () => {
+    const result = validateDelivery({
+      cartItems: [{ productId: "bakery-baguette", quantity: 1 }],
+      products,
+      deliveryRules,
+      selectedDate: bangkokDate,
+      region: "bangkok",
+      today: "2026-06-12",
+    });
+
+    expect(result.canCheckout).toBe(true);
+    expect(result.requiresSplitDelivery).toBe(false);
+    expect(result.messages).toEqual([]);
+  });
 });

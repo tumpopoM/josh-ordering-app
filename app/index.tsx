@@ -14,6 +14,7 @@ import { EmptyState } from "@/components/empty-state";
 import { ErrorState } from "@/components/error-state";
 import { ProductCard } from "@/components/product-card";
 import { SkeletonCard } from "@/components/skeleton-card";
+import { products as initialProducts } from "@/data/products";
 import { formatShortDate } from "@/domain/date-utils";
 import { getEarliestDeliveryDate } from "@/domain/delivery-validation";
 import { today } from "@/domain/delivery-options";
@@ -38,8 +39,8 @@ const categories: Array<ProductCategory | "All"> = [
 ];
 
 export default function ProductListScreen() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [status, setStatus] = useState<LoadStatus>("loading");
+  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [status, setStatus] = useState<LoadStatus>("ready");
   const [searchText, setSearchText] = useState("");
   const [category, setCategory] = useState<ProductCategory | "All">("All");
   const cartCount = useCartStore((state) =>
@@ -48,8 +49,6 @@ export default function ProductListScreen() {
 
   useEffect(() => {
     let isMounted = true;
-
-    setStatus("loading");
 
     loadProducts()
       .then((catalog) => {

@@ -13,18 +13,11 @@ type LoadProductsOptions = {
 export async function loadProducts(
   options: LoadProductsOptions = {},
 ): Promise<Product[]> {
-  await new Promise<void>((resolve, reject) => {
-    setTimeout(() => {
-      if (options.simulateFailure) {
-        reject(new Error("Catalog unavailable"));
-        return;
-      }
+  if (options.simulateFailure) {
+    return Promise.reject(new Error("Catalog unavailable"));
+  }
 
-      resolve();
-    }, 350);
-  });
-
-  return catalogProducts;
+  return [...catalogProducts];
 }
 
 export function filterProducts(

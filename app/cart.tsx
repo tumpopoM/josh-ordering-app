@@ -27,6 +27,7 @@ export default function CartScreen() {
   const selectedDeliveryDate =
     useCartStore((state) => state.selectedDeliveryDate) ?? defaultDeliveryDate;
   const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
   const setSelectedDeliveryDate = useCartStore(
     (state) => state.setSelectedDeliveryDate,
   );
@@ -124,7 +125,7 @@ export default function CartScreen() {
                   {formatCurrency(line.lineTotal)}
                 </Text>
               </View>
-              <View style={{ alignItems: "flex-end" }}>
+              <View style={{ alignItems: "flex-end", gap: spacing.sm }}>
                 <QuantityStepper
                   quantity={line.quantity}
                   onDecrease={() =>
@@ -134,6 +135,34 @@ export default function CartScreen() {
                     updateQuantity(line.product.id, line.quantity + 1)
                   }
                 />
+                <Pressable
+                  accessibilityRole="button"
+                  accessibilityLabel={`Remove ${line.product.name} from cart`}
+                  accessibilityHint="Delete this ingredient from the current cart"
+                  onPress={() => removeItem(line.product.id)}
+                  style={({ pressed }) => ({
+                    paddingVertical: spacing.xs,
+                    paddingHorizontal: spacing.sm,
+                    borderRadius: 999,
+                    borderCurve: "continuous",
+                    borderWidth: 1,
+                    borderColor: colors.border,
+                    backgroundColor: pressed
+                      ? colors.dangerSoft
+                      : colors.surface,
+                  })}
+                >
+                  <Text
+                    selectable
+                    style={{
+                      color: colors.danger,
+                      fontSize: typography.caption,
+                      fontWeight: "800",
+                    }}
+                  >
+                    Remove
+                  </Text>
+                </Pressable>
               </View>
             </View>
           </View>

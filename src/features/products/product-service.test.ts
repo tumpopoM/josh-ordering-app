@@ -17,6 +17,12 @@ describe("product service", () => {
     expect(result.map((product) => product.id)).toEqual(["seafood-salmon"]);
   });
 
+  it("returns the matching product when the id exists", () => {
+    expect(getProductById(products, "dairy-milk")).toEqual(
+      expect.objectContaining({ id: "dairy-milk", name: "Whole Milk" }),
+    );
+  });
+
   it("returns undefined when a product id does not exist", () => {
     expect(getProductById(products, "missing-product")).toBeUndefined();
   });

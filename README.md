@@ -45,7 +45,7 @@ npm run typecheck
 
 Current result:
 
-- `npm test` → 6 test files passed, 14 tests passed
+- `npm test` → 6 test files passed, 15 tests passed
 - `npm run typecheck` → passed with no TypeScript errors
 
 ## Product Flow
