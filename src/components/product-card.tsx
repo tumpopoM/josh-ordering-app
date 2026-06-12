@@ -30,21 +30,22 @@ export const ProductCard = memo(function ProductCard({
         accessibilityHint={`View price, delivery timing, and add ${product.name} to your cart`}
         accessibilityState={{ disabled: isUnavailable }}
         style={({ pressed }) => ({
-          gap: spacing.md,
-          borderRadius: 16,
+          gap: spacing.sm,
+          borderRadius: 20,
           borderCurve: "continuous",
           borderWidth: 1,
           borderColor: colors.border,
-          padding: spacing.lg,
+          padding: spacing.md,
           backgroundColor: pressed ? colors.surfaceMuted : colors.surface,
+          boxShadow: "0px 8px 18px rgba(11, 107, 87, 0.10)",
         })}
       >
         <View style={{ flexDirection: "row", gap: spacing.md }}>
           <View
             style={{
-              width: 72,
-              height: 72,
-              borderRadius: 14,
+              width: 74,
+              height: 74,
+              borderRadius: 16,
               borderCurve: "continuous",
               alignItems: "center",
               justifyContent: "center",
@@ -93,7 +94,13 @@ export const ProductCard = memo(function ProductCard({
           </View>
         </View>
         <View
-          style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: spacing.sm,
+            paddingTop: spacing.xs,
+          }}
         >
           <DeliveryBadge label={earliestDeliveryLabel} tone="info" />
           <DeliveryBadge

@@ -152,12 +152,25 @@ export default function ProductListScreen() {
         contentInsetAdjustmentBehavior="automatic"
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
-          gap: spacing.md,
-          padding: spacing.lg,
+          gap: spacing.lg,
+          paddingHorizontal: spacing.lg,
+          paddingTop: spacing.md,
           paddingBottom: spacing.xxl,
+          backgroundColor: colors.background,
         }}
         ListHeaderComponent={
-          <View style={{ gap: spacing.md }}>
+          <View
+            style={{
+              gap: spacing.md,
+              borderRadius: 18,
+              borderCurve: "continuous",
+              borderWidth: 1,
+              borderColor: colors.border,
+              padding: spacing.lg,
+              backgroundColor: colors.surface,
+              boxShadow: "0px 6px 14px rgba(11, 107, 87, 0.08)",
+            }}
+          >
             <View
               style={{
                 flexDirection: "row",
@@ -273,6 +286,7 @@ export default function ProductListScreen() {
           />
         }
         renderItem={renderProductCard}
+        ItemSeparatorComponent={() => <View style={{ height: spacing.sm }} />}
         initialNumToRender={8}
         maxToRenderPerBatch={6}
         windowSize={5}
