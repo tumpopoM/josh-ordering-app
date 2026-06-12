@@ -2,7 +2,10 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 
 import { DeliveryBadge } from "@/components/delivery-badge";
-import { formatCurrency, formatTemperatureType } from "@/domain/formatters";
+import {
+  formatCurrency,
+  formatProductMeta,
+} from "@/domain/formatters";
 import type { Product } from "@/domain/types";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
@@ -13,8 +16,12 @@ type ProductCardProps = {
   earliestDeliveryLabel: string;
 };
 
-export function ProductCard({ product, earliestDeliveryLabel }: ProductCardProps) {
-  const isUnavailable = !product.isOrderTaking || product.stockStatus === "outOfStock";
+export function ProductCard({
+  product,
+  earliestDeliveryLabel,
+}: ProductCardProps) {
+  const isUnavailable =
+    !product.isOrderTaking || product.stockStatus === "outOfStock";
 
   return (
     <Link href={`/product/${product.id}`} asChild>
@@ -43,7 +50,9 @@ export function ProductCard({ product, earliestDeliveryLabel }: ProductCardProps
               backgroundColor: colors.primarySoft,
             }}
           >
-            <Text style={{ fontSize: 28, fontWeight: "900", color: colors.primary }}>
+            <Text
+              style={{ fontSize: 28, fontWeight: "900", color: colors.primary }}
+            >
               {product.category.slice(0, 1)}
             </Text>
           </View>
@@ -51,14 +60,33 @@ export function ProductCard({ product, earliestDeliveryLabel }: ProductCardProps
             <Text
               selectable
               numberOfLines={2}
-              style={{ color: colors.text, fontSize: 17, fontWeight: "800", lineHeight: 22 }}
+              style={{
+                color: colors.text,
+                fontSize: 17,
+                fontWeight: "800",
+                lineHeight: 22,
+              }}
             >
               {product.name}
             </Text>
-            <Text selectable style={{ color: colors.textMuted, fontSize: typography.caption }}>
-              {product.category} · {formatTemperatureType(product.temperatureType)}
+            <Text
+              selectable
+              style={{ color: colors.textMuted, fontSize: typography.caption }}
+            >
+              {formatProductMeta(
+                product.category,
+                product.temperatureType,
+                product.unit,
+              )}
             </Text>
-            <Text selectable style={{ color: colors.text, fontSize: typography.body, fontWeight: "800" }}>
+            <Text
+              selectable
+              style={{
+                color: colors.text,
+                fontSize: typography.body,
+                fontWeight: "800",
+              }}
+            >
               {formatCurrency(product.price)} / {product.unit}
             </Text>
           </View>

@@ -14,7 +14,10 @@ import {
   deliveryDateOptions,
   today,
 } from "@/domain/delivery-options";
-import { formatCurrency } from "@/domain/formatters";
+import {
+  formatCurrency,
+  formatSubtotalLabel,
+} from "@/domain/formatters";
 import { getCartLines } from "@/features/cart/cart-selectors";
 import { useCartStore } from "@/features/cart/use-cart-store";
 import { colors } from "@/theme/colors";
@@ -27,7 +30,9 @@ export default function CartScreen() {
   const selectedDeliveryDate =
     useCartStore((state) => state.selectedDeliveryDate) ?? defaultDeliveryDate;
   const updateQuantity = useCartStore((state) => state.updateQuantity);
-  const setSelectedDeliveryDate = useCartStore((state) => state.setSelectedDeliveryDate);
+  const setSelectedDeliveryDate = useCartStore(
+    (state) => state.setSelectedDeliveryDate,
+  );
   const lines = getCartLines(items, products);
   const totals = calculateCartTotals(items, products);
   const validation = validateDelivery({
@@ -41,9 +46,18 @@ export default function CartScreen() {
 
   if (items.length === 0) {
     return (
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: spacing.lg }}>
-        <EmptyState title="Cart is empty" message="Add ingredients from the catalog before checkout." />
-        <PrimaryButton accessibilityLabel="Return to product catalog" onPress={() => router.push("/")}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{ padding: spacing.lg }}
+      >
+        <EmptyState
+          title="Cart is empty"
+          message="Add ingredients from the catalog before checkout."
+        />
+        <PrimaryButton
+          accessibilityLabel="Return to product catalog"
+          onPress={() => router.push("/")}
+        >
           Browse products
         </PrimaryButton>
       </ScrollView>
@@ -53,7 +67,11 @@ export default function CartScreen() {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{ gap: spacing.lg, padding: spacing.lg, paddingBottom: spacing.xxl }}
+      contentContainerStyle={{
+        gap: spacing.lg,
+        padding: spacing.lg,
+        paddingBottom: spacing.xxl,
+      }}
     >
       <View style={{ gap: spacing.md }}>
         {lines.map((line) => (
@@ -69,22 +87,49 @@ export default function CartScreen() {
               backgroundColor: colors.surface,
             }}
           >
-            <View style={{ flexDirection: "row", gap: spacing.md, alignItems: "flex-start" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                gap: spacing.md,
+                alignItems: "flex-start",
+              }}
+            >
               <View style={{ flex: 1, gap: spacing.xs }}>
-                <Text selectable style={{ color: colors.text, fontSize: typography.body, fontWeight: "900" }}>
+                <Text
+                  selectable
+                  style={{
+                    color: colors.text,
+                    fontSize: typography.body,
+                    fontWeight: "900",
+                  }}
+                >
                   {line.product.name}
                 </Text>
-                <Text selectable style={{ color: colors.textMuted, fontSize: typography.caption }}>
+                <Text
+                  selectable
+                  style={{ color: colors.textMuted, fontSize: typography.caption }}
+                >
                   {formatCurrency(line.product.price)} / {line.product.unit}
                 </Text>
-                <Text selectable style={{ color: colors.text, fontSize: typography.body, fontWeight: "800" }}>
+                <Text
+                  selectable
+                  style={{
+                    color: colors.text,
+                    fontSize: typography.body,
+                    fontWeight: "800",
+                  }}
+                >
                   {formatCurrency(line.lineTotal)}
                 </Text>
               </View>
               <QuantityStepper
                 quantity={line.quantity}
-                onDecrease={() => updateQuantity(line.product.id, line.quantity - 1)}
-                onIncrease={() => updateQuantity(line.product.id, line.quantity + 1)}
+                onDecrease={() =>
+                  updateQuantity(line.product.id, line.quantity - 1)
+                }
+                onIncrease={() =>
+                  updateQuantity(line.product.id, line.quantity + 1)
+                }
               />
             </View>
           </View>
@@ -92,7 +137,14 @@ export default function CartScreen() {
       </View>
 
       <View style={{ gap: spacing.sm }}>
-        <Text selectable style={{ color: colors.text, fontSize: typography.sectionTitle, fontWeight: "900" }}>
+        <Text
+          selectable
+          style={{
+            color: colors.text,
+            fontSize: typography.sectionTitle,
+            fontWeight: "900",
+          }}
+        >
           Delivery date
         </Text>
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}>
@@ -117,10 +169,20 @@ export default function CartScreen() {
           paddingTop: spacing.lg,
         }}
       >
-        <Text selectable style={{ color: colors.textMuted, fontSize: typography.caption, fontWeight: "800" }}>
-          SUBTOTAL · {totals.itemCount} ITEMS
+        <Text
+          selectable
+          style={{
+            color: colors.textMuted,
+            fontSize: typography.caption,
+            fontWeight: "800",
+          }}
+        >
+          {formatSubtotalLabel(totals.itemCount)}
         </Text>
-        <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: "900" }}>
+        <Text
+          selectable
+          style={{ color: colors.text, fontSize: 30, fontWeight: "900" }}
+        >
           {formatCurrency(totals.subtotal)}
         </Text>
       </View>
@@ -142,7 +204,11 @@ type DeliveryDateButtonProps = {
   onPress: () => void;
 };
 
-function DeliveryDateButton({ label, selected, onPress }: DeliveryDateButtonProps) {
+function DeliveryDateButton({
+  label,
+  selected,
+  onPress,
+}: DeliveryDateButtonProps) {
   return (
     <Pressable
       accessibilityRole="button"
@@ -195,20 +261,30 @@ function ValidationMessages({ messages }: ValidationMessagesProps) {
             borderCurve: "continuous",
             padding: spacing.md,
             backgroundColor:
-              message.severity === "error" ? colors.dangerSoft : colors.warningSoft,
+              message.severity === "error"
+                ? colors.dangerSoft
+                : colors.warningSoft,
           }}
         >
           <Text
             selectable
             style={{
-              color: message.severity === "error" ? colors.danger : colors.warning,
+              color:
+                message.severity === "error" ? colors.danger : colors.warning,
               fontSize: typography.body,
               fontWeight: "900",
             }}
           >
             {message.title}
           </Text>
-          <Text selectable style={{ color: colors.text, fontSize: typography.caption, lineHeight: 19 }}>
+          <Text
+            selectable
+            style={{
+              color: colors.text,
+              fontSize: typography.caption,
+              lineHeight: 19,
+            }}
+          >
             {message.message}
           </Text>
         </View>

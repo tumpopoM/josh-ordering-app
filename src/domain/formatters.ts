@@ -15,3 +15,15 @@ export function formatTemperatureType(type: TemperatureType): string {
 
   return "Frozen";
 }
+
+export function formatProductMeta(
+  category: string,
+  temperatureType: TemperatureType,
+  unit: string,
+): string {
+  return `${category} - ${formatTemperatureType(temperatureType)} - ${unit}`;
+}
+
+export function formatSubtotalLabel(itemCount: number): string {
+  return `SUBTOTAL - ${itemCount} ITEMS`;
+}
