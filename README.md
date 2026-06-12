@@ -66,6 +66,15 @@ Core delivery scenarios covered in the current build:
 - Bangkok frozen-route validation
 - Mixed-temperature split delivery warning
 
+Implemented scope note:
+
+- The prototype uses local mock data in `src/data/` and does not call a live
+  backend API.
+- The UI uses placeholder visuals for products rather than real image assets.
+- The current build includes cart persistence fallback, accessibility labels/
+  hints, skeleton loading, and FlatList-based catalog rendering.
+- It does not include LINE/push-notification mock support.
+
 ## Project Structure
 
 ```text
@@ -103,10 +112,12 @@ the product catalog can scale more gracefully than a manual map over a
 ## Notes for Review
 
 - Product and delivery data live in local mock files instead of UI components.
-- The app currently targets a Bangkok ordering flow in the UI.
+- The current validation path uses the Bangkok delivery region as the active
+  checkout flow in the UI.
 - Unit tests cover cart calculations, cart store behavior, product filtering,
   delivery validation, date utilities, and shared formatters.
-- The current build already covers the main ordering flow, validation rules,
-  and checkout confirmation path. Bonus items such as offline persistence,
-  advanced accessibility polish, and animation/skeleton states are still
-  optional follow-up work if needed for the final assessment submission.
+- The current build covers the five-screen ordering prototype, local mock
+  catalog and delivery rules, cart validation, and confirmation flow.
+  Implemented bonus items in this repo are cart persistence fallback,
+  accessibility labels/hints, skeleton loading, and FlatList-based list
+  rendering. Push-notification mock support is not part of this build.
