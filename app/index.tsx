@@ -13,6 +13,7 @@ import {
 import { EmptyState } from "@/components/empty-state";
 import { ErrorState } from "@/components/error-state";
 import { ProductCard } from "@/components/product-card";
+import { SkeletonCard } from "@/components/skeleton-card";
 import { formatShortDate } from "@/domain/date-utils";
 import { getEarliestDeliveryDate } from "@/domain/delivery-validation";
 import { today } from "@/domain/delivery-options";
@@ -104,22 +105,30 @@ export default function ProductListScreen() {
 
   if (status === "loading") {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "center",
-          gap: spacing.md,
-        }}
-      >
-        <ActivityIndicator color={colors.primary} size="large" />
-        <Text
-          accessibilityLiveRegion="polite"
-          selectable
-          style={{ color: colors.textMuted, fontSize: typography.body }}
-        >
-          Loading ingredient catalog
-        </Text>
+      <View style={{ flex: 1, padding: spacing.lg, gap: spacing.md }}>
+        <View style={{ gap: spacing.xs }}>
+          <Text
+            style={{
+              color: colors.text,
+              fontSize: typography.sectionTitle,
+              fontWeight: "900",
+            }}
+          >
+            Ingredient catalog
+          </Text>
+          <Text
+            accessibilityLiveRegion="polite"
+            selectable
+            style={{ color: colors.textMuted, fontSize: typography.body }}
+          >
+            Loading fresh ingredients…
+          </Text>
+        </View>
+        <View style={{ gap: spacing.md }}>
+          {Array.from({ length: 4 }).map((_, index) => (
+            <SkeletonCard key={`skeleton-${index}`} />
+          ))}
+        </View>
       </View>
     );
   }
