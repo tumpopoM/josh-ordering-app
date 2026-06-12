@@ -36,9 +36,15 @@ export default function CheckoutReviewScreen() {
 
   if (items.length === 0) {
     return (
-      <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: spacing.lg }}>
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        contentContainerStyle={{ padding: spacing.lg }}
+      >
         <EmptyState title="Nothing to review" message="Your cart is empty." />
-        <PrimaryButton accessibilityLabel="Return home" onPress={() => router.replace("/")}>
+        <PrimaryButton
+          accessibilityLabel="Return home"
+          onPress={() => router.replace("/")}
+        >
           Return home
         </PrimaryButton>
       </ScrollView>
@@ -48,7 +54,11 @@ export default function CheckoutReviewScreen() {
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
-      contentContainerStyle={{ gap: spacing.lg, padding: spacing.lg, paddingBottom: spacing.xxl }}
+      contentContainerStyle={{
+        gap: spacing.lg,
+        padding: spacing.lg,
+        paddingBottom: spacing.xxl,
+      }}
     >
       <View
         style={{
@@ -59,14 +69,30 @@ export default function CheckoutReviewScreen() {
           backgroundColor: colors.surface,
         }}
       >
-        <Text selectable style={{ color: colors.textMuted, fontSize: typography.caption, fontWeight: "800" }}>
+        <Text
+          selectable
+          style={{
+            color: colors.textMuted,
+            fontSize: typography.caption,
+            fontWeight: "800",
+          }}
+        >
           SELECTED DELIVERY DATE
         </Text>
-        <Text selectable style={{ color: colors.text, fontSize: typography.sectionTitle, fontWeight: "900" }}>
+        <Text
+          selectable
+          style={{
+            color: colors.text,
+            fontSize: typography.sectionTitle,
+            fontWeight: "900",
+          }}
+        >
           {formatShortDate(selectedDeliveryDate)}
         </Text>
         <DeliveryBadge
-          label={validation.canCheckout ? "Ready to confirm" : "Needs attention"}
+          label={
+            validation.canCheckout ? "Ready to confirm" : "Needs attention"
+          }
           tone={validation.canCheckout ? "success" : "danger"}
         />
       </View>
@@ -81,18 +107,40 @@ export default function CheckoutReviewScreen() {
             backgroundColor: colors.warningSoft,
           }}
         >
-          <Text selectable style={{ color: colors.warning, fontSize: typography.body, fontWeight: "900" }}>
+          <Text
+            selectable
+            style={{
+              color: colors.warning,
+              fontSize: typography.body,
+              fontWeight: "900",
+            }}
+          >
             Split delivery warning
           </Text>
-          <Text selectable style={{ color: colors.text, fontSize: typography.body, lineHeight: 23 }}>
-            Frozen goods will be routed separately from ambient or chilled items. The order can continue, but
-            restaurant staff should expect more than one drop-off.
+          <Text
+            selectable
+            style={{
+              color: colors.text,
+              fontSize: typography.body,
+              lineHeight: 23,
+            }}
+          >
+            Frozen items will be routed on a separate cold-chain delivery from
+            ambient and chilled goods. This split-delivery warning helps kitchen
+            staff plan for multiple drop-offs on the same order.
           </Text>
         </View>
       ) : null}
 
       <View style={{ gap: spacing.md }}>
-        <Text selectable style={{ color: colors.text, fontSize: typography.sectionTitle, fontWeight: "900" }}>
+        <Text
+          selectable
+          style={{
+            color: colors.text,
+            fontSize: typography.sectionTitle,
+            fontWeight: "900",
+          }}
+        >
           Order summary
         </Text>
         {lines.map((line) => (
@@ -107,10 +155,25 @@ export default function CheckoutReviewScreen() {
               paddingBottom: spacing.sm,
             }}
           >
-            <Text selectable style={{ flex: 1, color: colors.text, fontSize: typography.body, lineHeight: 22 }}>
+            <Text
+              selectable
+              style={{
+                flex: 1,
+                color: colors.text,
+                fontSize: typography.body,
+                lineHeight: 22,
+              }}
+            >
               {line.quantity} x {line.product.name}
             </Text>
-            <Text selectable style={{ color: colors.text, fontSize: typography.body, fontWeight: "800" }}>
+            <Text
+              selectable
+              style={{
+                color: colors.text,
+                fontSize: typography.body,
+                fontWeight: "800",
+              }}
+            >
               {formatCurrency(line.lineTotal)}
             </Text>
           </View>
@@ -118,10 +181,20 @@ export default function CheckoutReviewScreen() {
       </View>
 
       <View style={{ gap: spacing.xs }}>
-        <Text selectable style={{ color: colors.textMuted, fontSize: typography.caption, fontWeight: "800" }}>
+        <Text
+          selectable
+          style={{
+            color: colors.textMuted,
+            fontSize: typography.caption,
+            fontWeight: "800",
+          }}
+        >
           SUBTOTAL
         </Text>
-        <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: "900" }}>
+        <Text
+          selectable
+          style={{ color: colors.text, fontSize: 30, fontWeight: "900" }}
+        >
           {formatCurrency(totals.subtotal)}
         </Text>
       </View>

@@ -12,13 +12,15 @@ import {
 import { EmptyState } from "@/components/empty-state";
 import { ErrorState } from "@/components/error-state";
 import { ProductCard } from "@/components/product-card";
-import { products } from "@/data/products";
 import { formatShortDate } from "@/domain/date-utils";
 import { getEarliestDeliveryDate } from "@/domain/delivery-validation";
 import { today } from "@/domain/delivery-options";
-import type { ProductCategory } from "@/domain/types";
+import type { Product, ProductCategory } from "@/domain/types";
 import { useCartStore } from "@/features/cart/use-cart-store";
-import { filterProducts } from "@/features/products/product-service";
+import {
+  filterProducts,
+  loadProducts,
+} from "@/features/products/product-service";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
 import { typography } from "@/theme/typography";
@@ -34,6 +36,7 @@ const categories: Array<ProductCategory | "All"> = [
 ];
 
 export default function ProductListScreen() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [status, setStatus] = useState<LoadStatus>("loading");
   const [searchText, setSearchText] = useState("");
   const [category, setCategory] = useState<ProductCategory | "All">("All");
@@ -42,9 +45,30 @@ export default function ProductListScreen() {
   );
 
   useEffect(() => {
-    const timeoutId = setTimeout(() => setStatus("ready"), 450);
+    let isMounted = true;
 
-    return () => clearTimeout(timeoutId);
+    setStatus("loading");
+
+    loadProducts()
+      .then((catalog) => {
+        if (!isMounted) {
+          return;
+        }
+
+        setProducts(catalog);
+        setStatus("ready");
+      })
+      .catch(() => {
+        if (!isMounted) {
+          return;
+        }
+
+        setStatus("error");
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const filteredProducts = useMemo(
@@ -54,14 +78,32 @@ export default function ProductListScreen() {
 
   const reloadProducts = useCallback(() => {
     setStatus("loading");
-    setTimeout(() => setStatus("ready"), 450);
+
+    loadProducts()
+      .then((catalog) => {
+        setProducts(catalog);
+        setStatus("ready");
+      })
+      .catch(() => {
+        setStatus("error");
+      });
   }, []);
 
   if (status === "loading") {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: spacing.md }}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          gap: spacing.md,
+        }}
+      >
         <ActivityIndicator color={colors.primary} size="large" />
-        <Text selectable style={{ color: colors.textMuted, fontSize: typography.body }}>
+        <Text
+          selectable
+          style={{ color: colors.textMuted, fontSize: typography.body }}
+        >
           Loading ingredient catalog
         </Text>
       </View>
@@ -87,10 +129,20 @@ export default function ProductListScreen() {
         keyExtractor={(item) => item.id}
         contentInsetAdjustmentBehavior="automatic"
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ gap: spacing.md, padding: spacing.lg, paddingBottom: spacing.xxl }}
+        contentContainerStyle={{
+          gap: spacing.md,
+          padding: spacing.lg,
+          paddingBottom: spacing.xxl,
+        }}
         ListHeaderComponent={
           <View style={{ gap: spacing.md }}>
-            <View style={{ flexDirection: "row", alignItems: "center", gap: spacing.md }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: spacing.md,
+              }}
+            >
               <TextInput
                 accessibilityLabel="Search products"
                 value={searchText}
@@ -121,7 +173,9 @@ export default function ProductListScreen() {
                     justifyContent: "center",
                     borderRadius: 14,
                     borderCurve: "continuous",
-                    backgroundColor: pressed ? colors.primaryPressed : colors.primary,
+                    backgroundColor: pressed
+                      ? colors.primaryPressed
+                      : colors.primary,
                   })}
                 >
                   <Text
@@ -137,7 +191,13 @@ export default function ProductListScreen() {
                 </Pressable>
               </Link>
             </View>
-            <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}>
+            <View
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: spacing.sm,
+              }}
+            >
               {categories.map((item) => (
                 <Pressable
                   key={item}
@@ -156,7 +216,8 @@ export default function ProductListScreen() {
                           ? colors.border
                           : colors.surface,
                     borderWidth: 1,
-                    borderColor: category === item ? colors.primary : colors.border,
+                    borderColor:
+                      category === item ? colors.primary : colors.border,
                   })}
                 >
                   <Text

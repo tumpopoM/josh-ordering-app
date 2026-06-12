@@ -14,10 +14,7 @@ import {
   deliveryDateOptions,
   today,
 } from "@/domain/delivery-options";
-import {
-  formatCurrency,
-  formatSubtotalLabel,
-} from "@/domain/formatters";
+import { formatCurrency, formatSubtotalLabel } from "@/domain/formatters";
 import { getCartLines } from "@/features/cart/cart-selectors";
 import { useCartStore } from "@/features/cart/use-cart-store";
 import { colors } from "@/theme/colors";
@@ -94,20 +91,25 @@ export default function CartScreen() {
                 alignItems: "flex-start",
               }}
             >
-              <View style={{ flex: 1, gap: spacing.xs }}>
+              <View style={{ flex: 1, gap: spacing.xs, minWidth: 0 }}>
                 <Text
                   selectable
+                  numberOfLines={2}
                   style={{
                     color: colors.text,
                     fontSize: typography.body,
                     fontWeight: "900",
+                    flexShrink: 1,
                   }}
                 >
                   {line.product.name}
                 </Text>
                 <Text
                   selectable
-                  style={{ color: colors.textMuted, fontSize: typography.caption }}
+                  style={{
+                    color: colors.textMuted,
+                    fontSize: typography.caption,
+                  }}
                 >
                   {formatCurrency(line.product.price)} / {line.product.unit}
                 </Text>
@@ -122,15 +124,17 @@ export default function CartScreen() {
                   {formatCurrency(line.lineTotal)}
                 </Text>
               </View>
-              <QuantityStepper
-                quantity={line.quantity}
-                onDecrease={() =>
-                  updateQuantity(line.product.id, line.quantity - 1)
-                }
-                onIncrease={() =>
-                  updateQuantity(line.product.id, line.quantity + 1)
-                }
-              />
+              <View style={{ alignItems: "flex-end" }}>
+                <QuantityStepper
+                  quantity={line.quantity}
+                  onDecrease={() =>
+                    updateQuantity(line.product.id, line.quantity - 1)
+                  }
+                  onIncrease={() =>
+                    updateQuantity(line.product.id, line.quantity + 1)
+                  }
+                />
+              </View>
             </View>
           </View>
         ))}
@@ -147,15 +151,21 @@ export default function CartScreen() {
         >
           Delivery date
         </Text>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}>
-          {deliveryDateOptions.map((option) => (
-            <DeliveryDateButton
-              key={option.value}
-              label={option.label}
-              selected={selectedDeliveryDate === option.value}
-              onPress={() => setSelectedDeliveryDate(option.value)}
-            />
-          ))}
+        <View
+          style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+        >
+          <View
+            style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+          >
+            {deliveryDateOptions.map((option) => (
+              <DeliveryDateButton
+                key={option.value}
+                label={option.label}
+                selected={selectedDeliveryDate === option.value}
+                onPress={() => setSelectedDeliveryDate(option.value)}
+              />
+            ))}
+          </View>
         </View>
       </View>
 
