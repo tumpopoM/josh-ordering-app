@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   View,
+  type ListRenderItemInfo,
 } from "react-native";
 
 import { EmptyState } from "@/components/empty-state";
@@ -88,6 +89,18 @@ export default function ProductListScreen() {
         setStatus("error");
       });
   }, []);
+
+  const renderProductCard = useCallback(
+    ({ item }: ListRenderItemInfo<Product>) => (
+      <ProductCard
+        product={item}
+        earliestDeliveryLabel={`Earliest: ${formatShortDate(
+          getEarliestDeliveryDate(item, today),
+        )}`}
+      />
+    ),
+    [],
+  );
 
   if (status === "loading") {
     return (
@@ -247,16 +260,12 @@ export default function ProductListScreen() {
             message="Try another search term or switch to a broader category."
           />
         }
-        renderItem={({ item }) => (
-          <ProductCard
-            product={item}
-            earliestDeliveryLabel={`Earliest: ${formatShortDate(
-              getEarliestDeliveryDate(item, today),
-            )}`}
-          />
-        )}
+        renderItem={renderProductCard}
         initialNumToRender={8}
+        maxToRenderPerBatch={6}
+        windowSize={5}
         removeClippedSubviews
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

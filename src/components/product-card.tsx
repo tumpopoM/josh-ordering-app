@@ -1,11 +1,9 @@
 import { Link } from "expo-router";
+import { memo } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { DeliveryBadge } from "@/components/delivery-badge";
-import {
-  formatCurrency,
-  formatProductMeta,
-} from "@/domain/formatters";
+import { formatCurrency, formatProductMeta } from "@/domain/formatters";
 import type { Product } from "@/domain/types";
 import { colors } from "@/theme/colors";
 import { spacing } from "@/theme/spacing";
@@ -16,7 +14,7 @@ type ProductCardProps = {
   earliestDeliveryLabel: string;
 };
 
-export function ProductCard({
+export const ProductCard = memo(function ProductCard({
   product,
   earliestDeliveryLabel,
 }: ProductCardProps) {
@@ -27,7 +25,8 @@ export function ProductCard({
     <Link href={`/product/${product.id}`} asChild>
       <Pressable
         accessibilityRole="button"
-        accessibilityLabel={`Open ${product.name} detail`}
+        accessibilityLabel={`Open ${product.name} details`}
+        accessibilityHint={`View price, delivery timing, and add ${product.name} to your cart`}
         style={({ pressed }) => ({
           gap: spacing.md,
           borderRadius: 16,
@@ -91,7 +90,9 @@ export function ProductCard({
             </Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}>
+        <View
+          style={{ flexDirection: "row", flexWrap: "wrap", gap: spacing.sm }}
+        >
           <DeliveryBadge label={earliestDeliveryLabel} tone="info" />
           <DeliveryBadge
             label={isUnavailable ? "Unavailable" : "Order-taking"}
@@ -104,4 +105,4 @@ export function ProductCard({
       </Pressable>
     </Link>
   );
-}
+});
